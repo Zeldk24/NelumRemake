@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SwordGraveto
+  m_Controller: {fileID: 9100000, guid: b5afe9585dcd6f645bdc3da07e4e3afb, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 51646141d427aa444b93b0fbd4d0d438, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0f0955dcf00788d45a3a5f8844633c27, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4654738dc63e34e478d7a90ddac7a949, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cc7bf2c8a138a7e4ebf3226653a63b60, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c51e04e9070e5a64a9dda318e4898259, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e094d6dc25955dc43b2ff0f38e84a485, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f0575584b468aaf469a374f2550bd082, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f8b5f52ce02cdfd4ebf69894921cbf8b, type: 2}

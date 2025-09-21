@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - SpawnPoint
+  - Items
+  - Waypoint
+  - Walls
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Player
+  - Water
+  - UI
+  - 3DOverlay
+  - HeldItens
+  - PickupItens
+  - PlayerBullet
+  - Enemies
+  - Wall
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3020995211
+    locked: 0
+  - name: LightLayer
+    uniqueID: 3298581893
+    locked: 0
+  - name: OclussionObject
+    uniqueID: 1227605417
+    locked: 0
+  - name: Items
+    uniqueID: 4158830215
+    locked: 0
+  - name: UI
+    uniqueID: 1365817967
+    locked: 0
+  - name: FogLayer
+    uniqueID: 3040172165
+    locked: 0
+  m_RenderingLayers:
+  - Default

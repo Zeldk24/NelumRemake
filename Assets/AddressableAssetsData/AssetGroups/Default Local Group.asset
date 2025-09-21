@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: be089a40e2a816e4a829cc7b8d3c9527
+  m_SerializeEntries:
+  - m_GUID: 04d9444c08453104bb4b1351d8f05fe6
+    m_Address: Mersilas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25efad07eaea9f549bb8962cc5ad5e55
+    m_Address: Prefab_LeafShuriken
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33589a79e64eca841ad63356e20982ee
+    m_Address: antDeadSound
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34b8dd48ad8c6354b8bbe6414e38df87
+    m_Address: Prefab_Ant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 62d984c83294bbf40928c2a0b049a6be
+    m_Address: Prefab_LeafShuriken
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 665aa052689a1cc4bb4b9843c1d1916f
+    m_Address: Prefab_Sword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a69e71608124d394e8a2ee7f20658468
+    m_Address: Prefab_GravetoSword
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6d82726bfb1ca544aa704d0649d5e44
+    m_Address: Prefab_Graveto
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0b2bec44588eb34c838321d9669f4c9
+    m_Address: Graveto
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cef572d3f8e5a9a429a101483d48f8d0
+    m_Address: hitFlesh
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f9d48e53b5f014749a77556bac5f182b
+    m_Address: SwordSlashAudio
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa82811c7d5b1b94388069e669791a5f
+    m_Address: SwordSlashBase
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: a915278d23668b946b0d604f85a52f0b, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6cc7991f06d4a4f4b947b076e68de145, type: 2}
+    - {fileID: 11400000, guid: 687b1e16b28db0e44a5710cd95de5fca, type: 2}

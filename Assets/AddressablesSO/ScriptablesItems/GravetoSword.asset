@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da31429710530c446b9c41412c02437f, type: 3}
+  m_Name: GravetoSword
+  m_EditorClassIdentifier: 
+  itemID: Prefab_GravetoSword
+  prefabItemRef:
+    m_AssetGUID: 665aa052689a1cc4bb4b9843c1d1916f
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  sprite: {fileID: 1637705834525319861, guid: 408741a23d6aad74b9c217d271dba336, type: 3}
+  itemTag: 5
+  damage: 2
+  stackable: 1
+  itemName: GravetoSwordInventario
+  attackCooldown: 0.6
+  attackVFXAddress: 
+  attackSoundAddress: SwordSlashAudio
+  attackVolume: 1

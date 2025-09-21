@@ -1,0 +1,717 @@
+fileFormatVersion: 2
+guid: 967605dddccbd5d4a9c40599c0d21fac
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6624342063092857625
+    second: Idle-Down-Animation_0
+  - first:
+      213: 1820474422617729609
+    second: Idle-Down-Animation_1
+  - first:
+      213: -7432722382288717642
+    second: Idle-Down-Animation_2
+  - first:
+      213: 4220632846905862357
+    second: Idle-Down-Animation_3
+  - first:
+      213: -865695276643801815
+    second: Idle-Down-Animation_4
+  - first:
+      213: -2893893621628403715
+    second: Idle-Down-Animation_5
+  - first:
+      213: -861815140943327184
+    second: Idle-Down-Animation_6
+  - first:
+      213: 3349705383933063810
+    second: Idle-Down-Animation_7
+  - first:
+      213: -5573792850337962196
+    second: Idle-Down-Animation_8
+  - first:
+      213: -5947907739019401941
+    second: Idle-Down-Animation_9
+  - first:
+      213: -8350726278593731960
+    second: Idle-Down-Animation_10
+  - first:
+      213: -5295014105658447783
+    second: Idle-Down-Animation_11
+  - first:
+      213: -2233190193012335742
+    second: Idle-Down-Animation_12
+  - first:
+      213: 6085440213678492696
+    second: Idle-Down-Animation_13
+  - first:
+      213: -2238798574943060690
+    second: Idle-Down-Animation_14
+  - first:
+      213: 3622113241955146049
+    second: Idle-Down-Animation_15
+  - first:
+      213: 1294173683156356043
+    second: Idle-Down-Animation_16
+  - first:
+      213: 4023081742376191966
+    second: Idle-Down-Animation_17
+  - first:
+      213: -3397641801190467767
+    second: Idle-Down-Animation_18
+  - first:
+      213: -2645959833688519676
+    second: Idle-Down-Animation_19
+  - first:
+      213: 1033462495364636837
+    second: Idle-Down-Animation_20
+  - first:
+      213: 2246015088618406038
+    second: Idle-Down-Animation_21
+  - first:
+      213: -8713724209218669676
+    second: Idle-Down-Animation_22
+  - first:
+      213: -466792833944141584
+    second: Idle-Down-Animation_23
+  - first:
+      213: -2794907553954106922
+    second: Idle-Down-Animation_24
+  - first:
+      213: -5425547149434318726
+    second: Idle-Down-Animation_25
+  - first:
+      213: 8909829866717713133
+    second: Idle-Down-Animation_26
+  - first:
+      213: -6622944263930189349
+    second: Idle-Down-Animation_27
+  - first:
+      213: 4162572610608823143
+    second: Idle-Down-Animation_28
+  - first:
+      213: 2893363730051062419
+    second: Idle-Down-Animation_29
+  - first:
+      213: -6824954844331474804
+    second: Idle-Down-Animation_30
+  - first:
+      213: 2081681690765520687
+    second: Idle-Down-Animation_31
+  - first:
+      213: -6062765575942294091
+    second: Idle-Down-Animation_32
+  - first:
+      213: 8074170744483029155
+    second: Idle-Down-Animation_33
+  - first:
+      213: 3050402129601481134
+    second: Idle-Down-Animation_34
+  - first:
+      213: -699937553774283485
+    second: Idle-Down-Animation_35
+  - first:
+      213: 6807981787991865880
+    second: Idle-Down-Animation_36
+  - first:
+      213: -3750082411153042577
+    second: Idle-Down-Animation_37
+  - first:
+      213: 1513756700877693820
+    second: Idle-Down-Animation_38
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Idle-Down-Animation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5721db6431389646961ddd208f39fbb
+      internalID: 1186765996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50c3d7960aeb40a4a939857936a54f4e
+      internalID: 1796800872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_2
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b302f8062becd54280213eba3daa27e
+      internalID: -1849723320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d09a3cf1faa1e9846a6bbcd1b2bd560a
+      internalID: -1100977565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_4
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6576df289da09b84ea9522009ed59105
+      internalID: 856612888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_5
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e980a229a9a72c40a0c6a9e6b89fa03
+      internalID: 984493556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_6
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66ef4cb9fe5dc9745871bd785cb2b5e5
+      internalID: 1945707245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_7
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfcbaa9b9ce7edf4ebf62e429223b5b3
+      internalID: -436210982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_8
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4caecc354a679c4428ef0ec444ea02f9
+      internalID: 2046900526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_9
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3811ffcf04dde6447a1e0c590c2b2bc5
+      internalID: -425076052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_10
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d647fa8f54c0c9c459b76e440ef960c4
+      internalID: 1475938773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_11
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 815e2856a63ebff41b621e43a3cfc9b2
+      internalID: -632520091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_12
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b23328e74c6d9d4458c6353e8f85c2ac
+      internalID: 2077458586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_13
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4b93010d096801489a2ae40a1582d48
+      internalID: 887554629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_14
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 277639cb5d4a21d4795c5a0ca3de5295
+      internalID: -1663260786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_15
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a35f49134cc6504f9f6aac6eeb081c1
+      internalID: -147314059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_16
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea145bf31f206d040aa2830e345041e1
+      internalID: 1315888348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_17
+      rect:
+        serializedVersion: 2
+        x: 578
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb2987f357eeea54c8541b1da059728e
+      internalID: -1709474571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_18
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f3a4feb680114544b7e6bb29f3c8295
+      internalID: 1347527598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_19
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1b9c22a52a98dc41a8370c6d74aaefd
+      internalID: -397372077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle-Down-Animation_20
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 0
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 643a17e0555e42948bd4f3a3df3e1f3c
+      internalID: -1253217402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1e6efff466865f24f919c9c467b0456d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Idle-Down-Animation_0: 1186765996
+      Idle-Down-Animation_1: 1796800872
+      Idle-Down-Animation_10: 1475938773
+      Idle-Down-Animation_11: -632520091
+      Idle-Down-Animation_12: 2077458586
+      Idle-Down-Animation_13: 887554629
+      Idle-Down-Animation_14: -1663260786
+      Idle-Down-Animation_15: -147314059
+      Idle-Down-Animation_16: 1315888348
+      Idle-Down-Animation_17: -1709474571
+      Idle-Down-Animation_18: 1347527598
+      Idle-Down-Animation_19: -397372077
+      Idle-Down-Animation_2: -1849723320
+      Idle-Down-Animation_20: -1253217402
+      Idle-Down-Animation_3: -1100977565
+      Idle-Down-Animation_4: 856612888
+      Idle-Down-Animation_5: 984493556
+      Idle-Down-Animation_6: 1945707245
+      Idle-Down-Animation_7: -436210982
+      Idle-Down-Animation_8: 2046900526
+      Idle-Down-Animation_9: -425076052
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
