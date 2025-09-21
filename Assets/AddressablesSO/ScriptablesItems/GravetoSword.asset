@@ -23,7 +23,7 @@ MonoBehaviour:
   itemTag: 5
   damage: 2
   stackable: 1
-  itemName: GravetoSwordInventario
+  itemName: StickySword
   attackCooldown: 0.6
   attackVFXAddress: 
   attackSoundAddress: SwordSlashAudio

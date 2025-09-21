@@ -29,10 +29,16 @@ public class TooltipManager : MonoBehaviour
 
     void Update()
     {
-        if (painelTooltip != null && painelTooltip.activeSelf)
-        {
-            painelTooltip.transform.position = Input.mousePosition + new Vector3(5, -5, 0);
-        }
+        RectTransform rt = painelTooltip.GetComponent<RectTransform>();
+        Vector2 mousePos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rt.parent as RectTransform,
+            Input.mousePosition,
+            null,
+            out mousePos
+        );
+        Vector2 offset = new Vector2(rt.rect.width / 2 + 35, -rt.rect.height / 2 - 35);
+        rt.localPosition = mousePos + offset;
 
 
     }
@@ -64,7 +70,7 @@ public class TooltipManager : MonoBehaviour
             iconeIngrediente.sprite = ingrediente.item.sprite;
 
             // Checa se o jogador tem os itens (você precisa implementar Inventory.Singleton.GetItemCount)
-            int quantidadeNoInventario = Inventory.Singleton.GetItemCount(ingrediente.item);
+            int quantidadeNoInventario = Inventory.Singleton.GetItemCountByID(ingrediente.item.itemID);
             bool temItensSuficientes = quantidadeNoInventario >= ingrediente.quantity;
 
             // Formata o texto e colore de vermelho se não tiver recursos

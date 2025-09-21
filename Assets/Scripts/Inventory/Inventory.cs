@@ -108,25 +108,23 @@ public class Inventory : NetworkBehaviour
         }
     }
 
-    public int GetItemCount(Item itemToCount)
+    public int GetItemCountByID(string itemID)
     {
         int totalCount = 0;
 
-        // Varre os slots do inventário principal
         foreach (InventorySlot slot in inventorySlots)
         {
-            // Se o slot tem um item e é do tipo que procuramos...
-            if (slot.myItem != null && slot.myItem.myItemScriptable == itemToCount)
+            if (slot.myItem != null && slot.myItem.myItemScriptable != null
+                && slot.myItem.myItemScriptable.itemID == itemID)
             {
-                // ...soma 1 ao total, pois cada item é único.
                 totalCount++;
             }
         }
 
-        // Opcional: faça o mesmo para os slots de equipamento, se eles contarem.
         foreach (InventorySlot slot in equipmentSlots)
         {
-            if (slot.myItem != null && slot.myItem.myItemScriptable == itemToCount)
+            if (slot.myItem != null && slot.myItem.myItemScriptable != null
+                && slot.myItem.myItemScriptable.itemID == itemID)
             {
                 totalCount++;
             }
@@ -679,8 +677,8 @@ public class Inventory : NetworkBehaviour
     {
         foreach (Ingredient ingredient in recipe.ingredients)
         {
-            // Verifica se a contagem de itens no inventário é menor que a necessária.
-            if (GetItemCount(ingredient.item) < ingredient.quantity)
+            // Agora usamos o itemID para comparar
+            if (GetItemCountByID(ingredient.item.itemID) < ingredient.quantity)
             {
                 // Se faltar qualquer ingrediente, não pode craftar.
                 return false;
@@ -717,22 +715,33 @@ public class Inventory : NetworkBehaviour
     {
         int quantityRemoved = 0;
 
-        // Percorre todos os slots para encontrar os itens
         foreach (InventorySlot slot in inventorySlots)
         {
-            // Se já removemos o suficiente, podemos parar.
             if (quantityRemoved >= quantityToRemove) break;
 
-            if (slot.myItem != null && slot.myItem.myItemScriptable == itemToRemove)
+            if (slot.myItem != null && slot.myItem.myItemScriptable != null
+                && slot.myItem.myItemScriptable.itemID == itemToRemove.itemID)
             {
-                // Destroi o item visual do slot
                 Destroy(slot.myItem.gameObject);
-                slot.myItem = null; // Limpa a referência no slot
+                slot.myItem = null;
+                quantityRemoved++;
+            }
+        }
 
+        foreach (InventorySlot slot in equipmentSlots)
+        {
+            if (quantityRemoved >= quantityToRemove) break;
+
+            if (slot.myItem != null && slot.myItem.myItemScriptable != null
+                && slot.myItem.myItemScriptable.itemID == itemToRemove.itemID)
+            {
+                Destroy(slot.myItem.gameObject);
+                slot.myItem = null;
                 quantityRemoved++;
             }
         }
     }
+
 
     #endregion
 }

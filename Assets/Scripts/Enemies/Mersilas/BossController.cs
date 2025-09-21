@@ -13,15 +13,11 @@ public class BossController : NetworkBehaviour
     public EnemyController enemyController; // Vida do boss
     private Transform player;
     private NavMeshAgent agent;
-   
-
-
-
 
     [Header("Dash Config")]
     public float dashSpeed = 12f;
     public float dashDuration = 0.5f;
-    public float dashCooldown = 3f;
+    public float dashCooldown = 1f;
     public float dashDistance = 10f;
     public GameObject dashIndicatorPrefab;
 
@@ -29,11 +25,12 @@ public class BossController : NetworkBehaviour
     private bool dashAvailable = true;
     private bool isDashing = false;
 
+    private Vector3 dashStartPosition; // posição inicial do dash
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         particleSystems = GetComponentInChildren<ParticleSystem>();
-
     }
 
     private void Start()
@@ -68,7 +65,6 @@ public class BossController : NetworkBehaviour
             isInDashPhase = true;
         }
 
-   
         // Dash interrompível
         if (isInDashPhase && dashAvailable && !isDashing)
         {
@@ -81,27 +77,31 @@ public class BossController : NetworkBehaviour
         dashAvailable = false;
         isDashing = true;
 
-        Vector3 startPosition = transform.position;
-        Vector2 direction = (player.position - startPosition).normalized;
+        dashStartPosition = transform.position; // salva posição inicial
 
-        float dashOffset = 0.3f; // Quanto queremos recuar do hit para evitar colisão
+        InimigoStateMachine statemachine = GetComponent<InimigoStateMachine>();
+        statemachine.isPaused = true;
+        agent.isStopped = true;
+
+        Vector2 direction = (player.position - dashStartPosition).normalized;
+
+        float dashOffset = 0.3f;
 
         // Raycast para detectar parede
-        RaycastHit2D hit = Physics2D.Raycast(startPosition, direction, dashDistance, LayerMask.GetMask("Wall"));
+        RaycastHit2D hit = Physics2D.Raycast(dashStartPosition, direction, dashDistance, LayerMask.GetMask("Wall"));
         float actualDashDistance = dashDistance;
 
         if (hit.collider != null)
         {
             actualDashDistance = Mathf.Max(0f, hit.distance - dashOffset);
-            // Garante que não fique negativo
         }
 
-        Vector3 dashTarget = startPosition + (Vector3)direction * actualDashDistance;
+        Vector3 dashTarget = dashStartPosition + (Vector3)direction * actualDashDistance;
 
         // Instancia o indicador
         if (dashIndicatorPrefab != null)
         {
-            Vector3 indicatorPos = startPosition + (Vector3)direction * (actualDashDistance / 2);
+            Vector3 indicatorPos = dashStartPosition + (Vector3)direction * (actualDashDistance / 2);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.Euler(0, 0, angle + 90f);
 
@@ -119,14 +119,14 @@ public class BossController : NetworkBehaviour
 
         // Move o boss até o dashTarget
         float distanceToTarget = Vector3.Distance(transform.position, dashTarget);
-        while (distanceToTarget > 0.01f)
+        while (distanceToTarget > 0.01f && isDashing)
         {
             Vector3 nextPosition = Vector3.MoveTowards(transform.position, dashTarget, dashSpeed * Time.deltaTime);
 
-            // Checa colisão no próximo passo
+            // Checa colisão no próximo passo (com parede)
             RaycastHit2D stepHit = Physics2D.Raycast(transform.position, direction, dashSpeed * Time.deltaTime, LayerMask.GetMask("Wall"));
             if (stepHit.collider != null)
-                break; // bateu na parede
+                break;
 
             transform.position = nextPosition;
             distanceToTarget = Vector3.Distance(transform.position, dashTarget);
@@ -134,9 +134,62 @@ public class BossController : NetworkBehaviour
         }
 
         isDashing = false;
+        statemachine.isPaused = false;
+        agent.isStopped = false;
         yield return new WaitForSeconds(dashCooldown);
         dashAvailable = true;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isDashing && other.CompareTag("Player"))
+        {
+            // Cancela dash
+            StopAllCoroutines();
+            isDashing = false;
+
+            // Aplica dano no jogador
+            PlayerHealth ph = other.GetComponent<PlayerHealth>();
+            if (ph != null)
+            {
+                ph.TakeDamage(1);
+            }
+
+            // Aplica knockback no jogador
+            Rigidbody2D rbPlayer = other.GetComponent<Rigidbody2D>();
+            if (rbPlayer != null)
+            {
+                Vector2 knockDir = (other.transform.position - transform.position).normalized;
+                float knockForce = 8f;
+                rbPlayer.AddForce(knockDir * knockForce, ForceMode2D.Impulse);
+            }
+
+            // Inicia recuo suave do boss
+            StartCoroutine(SmoothReturnAfterHit());
+        }
+    }
+
+    private IEnumerator SmoothReturnAfterHit()
+    {
+        Vector3 recuoTarget = dashStartPosition - (player.position - dashStartPosition).normalized * 1f;
+        // recua um pouco atrás do dash inicial para evitar que fique colado no player
+        float recuoTime = 1f;
+        float t = 0f;
+        Vector3 recuoStart = transform.position;
+
+        while (t < recuoTime)
+        {
+            transform.position = Vector3.Lerp(recuoStart, recuoTarget, t / recuoTime);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = recuoTarget;
+
+        // Espera alguns segundos antes de liberar o dash novamente
+        yield return new WaitForSeconds(2f);
+        dashAvailable = true;
+    }
+
 
     // Funções existentes
     private IEnumerator waitroar()
