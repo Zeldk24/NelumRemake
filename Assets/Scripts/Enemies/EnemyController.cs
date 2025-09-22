@@ -24,6 +24,9 @@ public class EnemyController : NetworkBehaviour
     public int currentHealh;
     private int damage;
 
+    [HideInInspector] public bool isAiPermanentlyDisabled = false;
+
+
     private void Start()
     {
         // Pega os componentes
@@ -99,6 +102,16 @@ public class EnemyController : NetworkBehaviour
             StartCoroutine(FeedbackDamage());
         }
 
+        if (currentHealh <= enemiesData.health / 2)
+        {
+            BossController boss = GetComponent<BossController>();
+            if (boss != null && !boss.isInDashPhase)
+            {
+                boss.EnterDashPhase();
+            }
+        }
+
+
         if (currentHealh <= 0)
         {
             if (!string.IsNullOrEmpty(enemiesData.deathSoundAddress))
@@ -114,8 +127,8 @@ public class EnemyController : NetworkBehaviour
     {
         isKnockedBack = true;
 
-        // 1. Desativa o NavMeshAgent para que a física possa assumir
-        if (agent.isOnNavMesh) // Checagem de segurança
+        // 1. Desativa o NavMeshAgent
+        if (agent.isOnNavMesh)
         {
             agent.enabled = false;
         }
@@ -123,7 +136,7 @@ public class EnemyController : NetworkBehaviour
         // 2. Calcula a direção da força
         Vector2 direction = (transform.position - damageSourcePosition).normalized;
 
-        // 3. Zera a velocidade atual para que a nova força seja aplicada de forma limpa
+        // 3. Zera a velocidade atual
         rb.linearVelocity = Vector2.zero;
 
         // 4. Aplica a força de repulsão
@@ -135,8 +148,11 @@ public class EnemyController : NetworkBehaviour
         // 6. Para o movimento do Rigidbody
         rb.linearVelocity = Vector2.zero;
 
-        // 7. Reativa o NavMeshAgent
-        agent.enabled = true;
+        // 7. Reativa o NavMeshAgent apenas se a IA não estiver permanentemente desativada
+        if (!isAiPermanentlyDisabled && agent != null && !agent.enabled)
+        {
+            agent.enabled = true;
+        }
 
         isKnockedBack = false;
     }

@@ -24676,10 +24676,9 @@ MonoBehaviour:
   particleSystems: {fileID: 2931444715039232656}
   enemyController: {fileID: 4921954300378968513}
   dashSpeed: 15
-  dashDuration: 0.5
-  dashCooldown: 3
-  dashDistance: 10
+  dashCooldown: 1.5
   dashIndicatorPrefab: {fileID: 3085327516437262143, guid: 645e685c32ca8dc45b1ca792fd73927d, type: 3}
+  isInDashPhase: 0
 --- !u!195 &1876530089138143205
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -24720,6 +24719,7 @@ MonoBehaviour:
   knockbackDuration: 0.2
   isKnockedBack: 0
   currentHealh: 0
+  isAiPermanentlyDisabled: 0
 --- !u!114 &6980680737504573737
 MonoBehaviour:
   m_ObjectHideFlags: 0
