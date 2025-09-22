@@ -153,7 +153,7 @@ public class EnemyController : NetworkBehaviour
         PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
         if (player != null)
         {
-            player.TakeDamage(damage);
+            player.TakeDamage(damage, transform.position);
         }
     }
 

@@ -168,7 +168,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6068265739249014275}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -343,6 +343,7 @@ MonoBehaviour:
   knockbackStrength: 3
   knockbackDuration: 0.2
   isKnockedBack: 0
+  currentHealh: 0
 --- !u!114 &7918918364834244148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +370,7 @@ MonoBehaviour:
   estadoAtual: 0
   canPatrol: 1
   canPursuit: 1
+  isPaused: 0
 --- !u!1 &6099362456562933180
 GameObject:
   m_ObjectHideFlags: 0

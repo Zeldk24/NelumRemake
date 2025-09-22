@@ -17,7 +17,7 @@ public class BossController : NetworkBehaviour
     [Header("Dash Config")]
     public float dashSpeed = 12f;
     public float dashDuration = 0.5f;
-    public float dashCooldown = 1f;
+    public float dashCooldown = 0.5f;
     public float dashDistance = 10f;
     public GameObject dashIndicatorPrefab;
 
@@ -26,6 +26,10 @@ public class BossController : NetworkBehaviour
     private bool isDashing = false;
 
     private Vector3 dashStartPosition; // posição inicial do dash
+
+    // === Layers ===
+       // layer normal do boss
+    private string dashLayerName = "Wall";   // layer que criamos só pra colidir com player
 
     private void Awake()
     {
@@ -65,7 +69,6 @@ public class BossController : NetworkBehaviour
             isInDashPhase = true;
         }
 
-        // Dash interrompível
         if (isInDashPhase && dashAvailable && !isDashing)
         {
             StartCoroutine(DashRoutine());
@@ -77,65 +80,92 @@ public class BossController : NetworkBehaviour
         dashAvailable = false;
         isDashing = true;
 
-        dashStartPosition = transform.position; // salva posição inicial
-
         InimigoStateMachine statemachine = GetComponent<InimigoStateMachine>();
         statemachine.isPaused = true;
-        agent.isStopped = true;
 
-        Vector2 direction = (player.position - dashStartPosition).normalized;
+        // === 🔹 MUDA PARA LAYER DO DASH ===
+        gameObject.layer = LayerMask.NameToLayer(dashLayerName);
 
-        float dashOffset = 0.3f;
+        // Desativa NavMesh enquanto dasha
+        if (agent != null) agent.enabled = false;
 
-        // Raycast para detectar parede
-        RaycastHit2D hit = Physics2D.Raycast(dashStartPosition, direction, dashDistance, LayerMask.GetMask("Wall"));
-        float actualDashDistance = dashDistance;
+        // === 1. Captura a altura do jogador no momento do ataque ===
+        float targetY = player.position.y;
 
-        if (hit.collider != null)
+        bool fromLeft = Random.value > 0.5f;
+        Vector3 recuoDir = fromLeft ? Vector3.right : Vector3.left;
+
+        // === 2. Passo para trás antes de sair da tela ===
+        Vector3 recuoTarget = transform.position + recuoDir * 2f;
+        float recuoTime = 0.3f;
+        float t = 0f;
+        Vector3 recuoStart = transform.position;
+
+        while (t < recuoTime)
         {
-            actualDashDistance = Mathf.Max(0f, hit.distance - dashOffset);
+            transform.position = Vector3.Lerp(recuoStart, recuoTarget, t / recuoTime);
+            t += Time.deltaTime;
+            yield return null;
         }
+        transform.position = recuoTarget;
 
-        Vector3 dashTarget = dashStartPosition + (Vector3)direction * actualDashDistance;
+        // === 3. Calcula posições offscreen ===
+        Camera cam = Camera.main;
+        float camHeight = 2f * cam.orthographicSize;
+        float camWidth = camHeight * cam.aspect;
 
-        // Instancia o indicador
-        if (dashIndicatorPrefab != null)
+        Vector3 offscreenPos;
+        if (fromLeft)
+            offscreenPos = new Vector3(cam.transform.position.x - camWidth / 2 - 4f, targetY, 0f);
+        else
+            offscreenPos = new Vector3(cam.transform.position.x + camWidth / 2 + 4f, targetY, 0f);
+
+        // === 4. Move o boss até fora da tela ===
+        while (Vector3.Distance(transform.position, offscreenPos) > 0.1f)
         {
-            Vector3 indicatorPos = dashStartPosition + (Vector3)direction * (actualDashDistance / 2);
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(0, 0, angle + 90f);
-
-            GameObject indicator = Instantiate(dashIndicatorPrefab, indicatorPos, rotation);
-            indicator.transform.localScale = new Vector3(
-                indicator.transform.localScale.x,
-                actualDashDistance,
-                indicator.transform.localScale.z
-            );
-            Destroy(indicator, 1f);
-        }
-
-        // Aviso do dash
-        yield return new WaitForSeconds(1f);
-
-        // Move o boss até o dashTarget
-        float distanceToTarget = Vector3.Distance(transform.position, dashTarget);
-        while (distanceToTarget > 0.01f && isDashing)
-        {
-            Vector3 nextPosition = Vector3.MoveTowards(transform.position, dashTarget, dashSpeed * Time.deltaTime);
-
-            // Checa colisão no próximo passo (com parede)
-            RaycastHit2D stepHit = Physics2D.Raycast(transform.position, direction, dashSpeed * Time.deltaTime, LayerMask.GetMask("Wall"));
-            if (stepHit.collider != null)
-                break;
-
-            transform.position = nextPosition;
-            distanceToTarget = Vector3.Distance(transform.position, dashTarget);
+            transform.position = Vector3.MoveTowards(transform.position, offscreenPos, dashSpeed * Time.deltaTime);
             yield return null;
         }
 
+        // === 5. Cria indicador horizontal ===
+        if (dashIndicatorPrefab != null)
+        {
+            Vector3 indicatorPos = new Vector3(cam.transform.position.x, targetY, 0f);
+            Quaternion rotation = Quaternion.Euler(0, 0, 90f);
+            GameObject indicator = Instantiate(dashIndicatorPrefab, indicatorPos, rotation);
+
+            indicator.transform.localScale = new Vector3(
+                indicator.transform.localScale.x,
+                camWidth + 8f,
+                indicator.transform.localScale.z
+            );
+
+            Destroy(indicator, 1f);
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        // === 6. Define alvo final do dash ===
+        Vector3 dashTarget;
+        if (fromLeft)
+            dashTarget = new Vector3(cam.transform.position.x + camWidth / 2 + 4f, targetY, 0f);
+        else
+            dashTarget = new Vector3(cam.transform.position.x - camWidth / 2 - 4f, targetY, 0f);
+
+        // === 7. Dash em linha reta ===
+        while (Vector3.Distance(transform.position, dashTarget) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, dashTarget, dashSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // === 8. Reseta estado ===
         isDashing = false;
         statemachine.isPaused = false;
-        agent.isStopped = false;
+
+        // 🔹 IMPORTANTE: mantém na layer "BossDash" pra SEMPRE atravessar cenário
+        // Se quisesse voltar ao normal: gameObject.layer = LayerMask.NameToLayer(defaultLayerName);
+
         yield return new WaitForSeconds(dashCooldown);
         dashAvailable = true;
     }
@@ -144,18 +174,15 @@ public class BossController : NetworkBehaviour
     {
         if (isDashing && other.CompareTag("Player"))
         {
-            // Cancela dash
             StopAllCoroutines();
             isDashing = false;
 
-            // Aplica dano no jogador
             PlayerHealth ph = other.GetComponent<PlayerHealth>();
             if (ph != null)
             {
-                ph.TakeDamage(1);
+                ph.TakeDamage(1, transform.position);
             }
 
-            // Aplica knockback no jogador
             Rigidbody2D rbPlayer = other.GetComponent<Rigidbody2D>();
             if (rbPlayer != null)
             {
@@ -164,7 +191,6 @@ public class BossController : NetworkBehaviour
                 rbPlayer.AddForce(knockDir * knockForce, ForceMode2D.Impulse);
             }
 
-            // Inicia recuo suave do boss
             StartCoroutine(SmoothReturnAfterHit());
         }
     }
@@ -172,7 +198,6 @@ public class BossController : NetworkBehaviour
     private IEnumerator SmoothReturnAfterHit()
     {
         Vector3 recuoTarget = dashStartPosition - (player.position - dashStartPosition).normalized * 1f;
-        // recua um pouco atrás do dash inicial para evitar que fique colado no player
         float recuoTime = 1f;
         float t = 0f;
         Vector3 recuoStart = transform.position;
@@ -185,13 +210,10 @@ public class BossController : NetworkBehaviour
         }
         transform.position = recuoTarget;
 
-        // Espera alguns segundos antes de liberar o dash novamente
         yield return new WaitForSeconds(2f);
         dashAvailable = true;
     }
 
-
-    // Funções existentes
     private IEnumerator waitroar()
     {
         animator.SetTrigger("Roar");

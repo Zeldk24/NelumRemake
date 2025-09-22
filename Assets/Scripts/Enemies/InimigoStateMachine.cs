@@ -31,8 +31,8 @@ public class InimigoStateMachine : MonoBehaviour
     private EstadoIA estadoAtual;
 
     [Header("StatesPermissions")]
-    [SerializeField] private bool canPatrol;
-    [SerializeField] private bool canPursuit;
+    public bool canPatrol;
+    public bool canPursuit;
 
 
     public bool isPaused = false;
@@ -101,8 +101,9 @@ public class InimigoStateMachine : MonoBehaviour
 
     void ExecutarEstadoPatrulha()
     {
+        if (agente == null || !agente.enabled || !agente.isOnNavMesh) return;
+
         // 1. AÇÃO: Patrulhar
-        // Se o inimigo chegou perto do seu destino (ponto de patrulha)
         if (!agente.pathPending && agente.remainingDistance < 0.5f)
         {
             IrParaProximoPonto();
@@ -115,17 +116,16 @@ public class InimigoStateMachine : MonoBehaviour
         }
     }
 
+
     void ExecutarEstadoPerseguicao()
     {
         if (enemyController != null && enemyController.isKnockedBack) return;
 
-        agente.SetDestination(jogador.position);
+        if (agente.enabled && agente.isOnNavMesh) // só executa se o agente estiver ativo
+        {
+            agente.SetDestination(jogador.position);
+        }
 
-        // Opcional: fazer o inimigo olhar para o jogador
-        Vector2 direcao = (jogador.position - transform.position).normalized;
-        // (Aqui você poderia usar a 'direcao' para mudar o sprite ou rotação do inimigo)
-
-        // 2. TRANSIÇÃO: Verificar se o jogador saiu do raio de visão
         if (!JogadorEstaNoRaio(raioDePerdaDeVisao))
         {
             MudarParaEstado(EstadoIA.Patrulhando);
@@ -136,13 +136,13 @@ public class InimigoStateMachine : MonoBehaviour
 
     void IrParaProximoPonto()
     {
-        // Se não houver pontos de patrulha, não faz nada
         if (pontosDePatrulha.Length == 0) return;
 
-        // Define o destino para o ponto atual
-        agente.SetDestination(pontosDePatrulha[indicePontoAtual].position);
+        if (agente.enabled && agente.isOnNavMesh)
+        {
+            agente.SetDestination(pontosDePatrulha[indicePontoAtual].position);
+        }
 
-        // Atualiza o índice para o próximo ponto, voltando ao início se chegar no fim
         indicePontoAtual = (indicePontoAtual + 1) % pontosDePatrulha.Length;
     }
 

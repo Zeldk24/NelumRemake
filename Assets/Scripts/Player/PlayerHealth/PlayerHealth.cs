@@ -30,7 +30,11 @@ public class PlayerHealth : NetworkBehaviour
     private InputManager inputs;
 
 
-
+    [Header("Knockback")]
+    
+    public float knockbackDuration = 0.2f; // Duração em segundos
+    public bool isKnockedBack; // Flag para controlar o estado
+    private Rigidbody2D rb;
 
     public override void OnNetworkSpawn()
     {
@@ -47,6 +51,7 @@ public class PlayerHealth : NetworkBehaviour
     void Start()
     {
         inputs = GetComponent<InputManager>();
+        rb = GetComponent<Rigidbody2D>();
 
         spawnManager = SpawnManager.Instance;
        // panel.SetActive(false);
@@ -71,10 +76,14 @@ public class PlayerHealth : NetworkBehaviour
 
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3 damageSourcePosition)
     {
+        if (isKnockedBack) return; // <--- ADICIONE ESTA LINHA PARA EVITAR MÚLTIPLOS KNOCKBACKS
+
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         heartUIManager?.UpdateHearts(currentHealth, maxHealth);
+
+        StartCoroutine(KnockbackCoroutine(damageSourcePosition));
 
         playerCount = NetworkManager.Singleton.ConnectedClients.Count;
 
@@ -82,11 +91,10 @@ public class PlayerHealth : NetworkBehaviour
         {
             StartCoroutine(CooldownRespawn(1));
         }
-        else if(currentHealth <= 0 && IsSingleplayer())
+        else if (currentHealth <= 0 && IsSingleplayer())
         {
             StartCoroutine(CooldownRespawn(1));
         }
-
     }
 
 
@@ -110,7 +118,29 @@ public class PlayerHealth : NetworkBehaviour
         inputs.EnableMovement();
     }
 
+    private IEnumerator KnockbackCoroutine(Vector3 damageSourcePosition)
+    {
+        inputs.DisableMovement();
+        isKnockedBack = true;
 
+        // 2. Calcula a direção da força
+        Vector2 direction = (transform.position - damageSourcePosition).normalized;
+
+        // 3. Zera a velocidade atual para que a nova força seja aplicada de forma limpa
+        rb.linearVelocity = Vector2.zero;
+
+        // 4. Aplica a força de repulsão
+        rb.AddForce(direction * 20f, ForceMode2D.Impulse);
+
+        // 5. Espera a duração do knockback
+        yield return new WaitForSeconds(knockbackDuration);
+
+        // 6. Para o movimento do Rigidbody
+        rb.linearVelocity = Vector2.zero;
+
+        inputs.EnableMovement();
+        isKnockedBack = false;
+    }
 
 
     public void Heal(int amount)

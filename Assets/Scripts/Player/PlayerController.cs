@@ -34,6 +34,8 @@ public class PlayerController : NetworkBehaviour
 
     private InputManager inputs;
 
+    private PlayerHealth playerHealth;
+
     private NetworkVariable<int> activeItemType = new NetworkVariable<int>(0,
        NetworkVariableReadPermission.Everyone,
        NetworkVariableWritePermission.Server
@@ -61,6 +63,7 @@ public class PlayerController : NetworkBehaviour
         inputs = GetComponent<InputManager>();
         _playerRigidbody2d = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
+        playerHealth = GetComponent<PlayerHealth>();
 
         foreach (var mapping in itemLayers)
         {
@@ -538,11 +541,16 @@ public class PlayerController : NetworkBehaviour
     {
         if (GetComponent<NetworkObject>().IsOwner)
         {
+            // Se o jogador estiver sofrendo knockback, interrompa a execução do movimento.
+            if (playerHealth != null && playerHealth.isKnockedBack)
+            {
+                return;
+            }
+
             Vector2 move = inputs.MovementInput().normalized;
             _playerRigidbody2d.linearVelocity = move * _playerSpeed;
         }
     }
-
     private void Attack()
     {
 
