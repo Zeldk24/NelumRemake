@@ -20,6 +20,12 @@ MonoBehaviour:
     m_EditorAssetChanged: 0
   health: 10
   damage: 3
+  dropItem:
+    m_AssetGUID: 25efad07eaea9f549bb8962cc5ad5e55
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
   takeDamageSoundAddress: 
   takeDamageVolume: 1
   deathSoundAddress: antDeadSound

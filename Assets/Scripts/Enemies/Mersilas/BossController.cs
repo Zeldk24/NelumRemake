@@ -17,7 +17,7 @@ public class BossController : NetworkBehaviour
 
     [Header("Dash Config")]
     public float dashSpeed = 12f;
-    public float dashCooldown = 0.5f;
+    public float dashCooldown = 5f;
     public GameObject dashIndicatorPrefab;
 
     public bool isInDashPhase = false;
@@ -78,10 +78,12 @@ public class BossController : NetworkBehaviour
 
             float targetY = player.position.y;
             bool fromLeft = Random.value > 0.5f;
-            Vector3 recuoDir = fromLeft ? Vector3.right : Vector3.left;
+            
 
-            Vector3 recuoTarget = transform.position + recuoDir * 2f;
-            yield return MoveToPosition(recuoTarget, 0.3f);
+
+            Vector3 awayDir = (transform.position - player.position).normalized;
+            Vector3 prepTarget = transform.position + awayDir * 2f;
+            yield return MoveToPosition(prepTarget, 0.3f);
 
             Camera cam = Camera.main;
             float camHeight = 2f * cam.orthographicSize;

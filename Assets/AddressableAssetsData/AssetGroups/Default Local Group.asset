@@ -65,6 +65,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db01af03efb873c459462509c2c365f3
+    m_Address: terrasArboreas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f9d48e53b5f014749a77556bac5f182b
     m_Address: SwordSlashAudio
     m_ReadOnly: 0

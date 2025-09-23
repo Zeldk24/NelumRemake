@@ -1,7 +1,11 @@
+using System.Collections;
+using System.Drawing;
+using NUnit.Framework.Interfaces;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.AI;
-using System.Collections;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 
 public class EnemyController : NetworkBehaviour
@@ -86,7 +90,7 @@ public class EnemyController : NetworkBehaviour
     }
 
     // MODIFICADO: Parâmetro damageSourcePosition adicionado
-    public void TakeDamageInternal(int damage, Vector3 damageSourcePosition)
+    public async void TakeDamageInternal(int damage, Vector3 damageSourcePosition)
     {
         currentHealh -= damage;
 
@@ -117,6 +121,11 @@ public class EnemyController : NetworkBehaviour
             if (!string.IsNullOrEmpty(enemiesData.deathSoundAddress))
             {
                 SoundManager.Instance.PlaySound(enemiesData.deathSoundAddress, enemiesData.deathSoundVolume);
+
+                AsyncOperationHandle<GameObject> handle = Addressables.InstantiateAsync(enemiesData.dropItem, transform.position, transform.rotation);
+                GameObject instance = await handle.Task;
+
+                instance.layer = LayerMask.NameToLayer("PickupItens");
             }
             DeathEnemy();
         }

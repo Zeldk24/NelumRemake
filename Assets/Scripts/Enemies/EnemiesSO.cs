@@ -9,6 +9,8 @@ public class EnemiesSO : ScriptableObject
     public int health;
     public int damage;
 
+    public AssetReferenceGameObject dropItem;
+
     public string takeDamageSoundAddress;
     [Range(0f, 1f)]
     public float takeDamageVolume;
