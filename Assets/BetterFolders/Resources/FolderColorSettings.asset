@@ -70,3 +70,27 @@ MonoBehaviour:
     applyColorToSubfolders: 0
     applyIconToSubfolders: 0
     materialColor: 0
+  - folderName: ScriptablesRecipes
+    folderColor: {r: 1, g: 0.39526987, b: 0, a: 1}
+    fullPath: Assets/AddressablesSO/ScriptablesRecipes
+    icon: {fileID: 0}
+    applyToAllFolders: 0
+    applyColorToSubfolders: 0
+    applyIconToSubfolders: 0
+    materialColor: 0
+  - folderName: ScriptablesItems
+    folderColor: {r: 0.24448201, g: 0.71110535, b: 0.7735849, a: 1}
+    fullPath: Assets/AddressablesSO/ScriptablesItems
+    icon: {fileID: 0}
+    applyToAllFolders: 0
+    applyColorToSubfolders: 0
+    applyIconToSubfolders: 0
+    materialColor: 0
+  - folderName: ScriptablesEnemies
+    folderColor: {r: 0.7830189, g: 0.15881987, b: 0.15881987, a: 1}
+    fullPath: Assets/AddressablesSO/ScriptablesEnemies
+    icon: {fileID: 0}
+    applyToAllFolders: 0
+    applyColorToSubfolders: 0
+    applyIconToSubfolders: 0
+    materialColor: 0

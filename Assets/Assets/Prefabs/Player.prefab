@@ -102,7 +102,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 8144e8bf14ba3964eab4874a110fa69b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -223,6 +223,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   cameraPrefab: {fileID: 2543437547526893716, guid: 13851c02be11f4b44922803163f45dc4, type: 3}
   offset: {x: 0, y: 0, z: -7}
+  canFollow: 1
 --- !u!61 &-234876489852015323
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -349,6 +350,8 @@ MonoBehaviour:
   maxHealth: 5
   currentHealth: 5
   heartsUIPrefab: {fileID: 2241197214089294992, guid: 97f34b7841972a4449bfd7f26cf73773, type: 3}
+  knockbackDuration: 0.2
+  isKnockedBack: 0
 --- !u!114 &12016180398198810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,28 +446,28 @@ MonoBehaviour:
   TransitionStateInfoList:
   - IsCrossFadeExit: 0
     Layer: 1
-    OriginatingState: 2081823275
-    DestinationState: 526456030
-    TransitionDuration: 0.25
+    OriginatingState: 2026381050
+    DestinationState: 667284040
+    TransitionDuration: 0
     TriggerNameHash: 1080829965
     TransitionIndex: 0
   - IsCrossFadeExit: 0
     Layer: 1
-    OriginatingState: 2081823275
-    DestinationState: 2046387085
+    OriginatingState: 2026381050
+    DestinationState: 526456030
     TransitionDuration: 0
     TriggerNameHash: 1080829965
     TransitionIndex: 1
   - IsCrossFadeExit: 0
     Layer: 1
-    OriginatingState: 2081823275
-    DestinationState: 667284040
+    OriginatingState: 2026381050
+    DestinationState: 2046387085
     TransitionDuration: 0
     TriggerNameHash: 1080829965
     TransitionIndex: 2
   - IsCrossFadeExit: 0
     Layer: 1
-    OriginatingState: 2081823275
+    OriginatingState: 2026381050
     DestinationState: 1688862055
     TransitionDuration: 0
     TriggerNameHash: 1080829965

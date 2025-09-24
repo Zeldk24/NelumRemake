@@ -10,91 +10,117 @@ using UnityEngine.UIElements;
 
 public class PlayerHealth : NetworkBehaviour
 {
-    private SpawnManager spawnManager; 
+    private SpawnManager spawnManager;
     public ulong playerID;
 
     public int maxHealth = 6;
     public int currentHealth;
 
-    public GameObject heartsUIPrefab; // UI de corações
+    public GameObject heartsUIPrefab;
     private HeartUIManager heartUIManager;
     private bool isMultiplayer = NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening;
 
     private int playerCount;
-
-   // [SerializeField] private GameObject panel;
-   // [SerializeField] private TextMeshProUGUI textCount;
-
-    //private bool bloquearContador = false;
-    //public bool IsDead = false;
     private InputManager inputs;
-
+    private bool isDead = false; // <<< PASSO 1: Adicionar a flag de estado de morte
 
     [Header("Knockback")]
-    
-    public float knockbackDuration = 0.2f; // Duração em segundos
-    public bool isKnockedBack; // Flag para controlar o estado
+    public float knockbackDuration = 0.2f;
+    public bool isKnockedBack;
     private Rigidbody2D rb;
+
+
+
+    private SpriteRenderer spriteRender;
+    private Material materialInstance;
+    private static readonly int FlashAmountID = Shader.PropertyToID("_FlashAmount");
+
+
+    private bool isInvincible = false;
+    [Tooltip("Duração da invencibilidade em segundos após levar dano.")]
+    public float invincibilityDuration = 1f;
 
     public override void OnNetworkSpawn()
     {
-      
         base.OnNetworkSpawn();
-
         if (!IsOwner) return;
-        
         playerID = OwnerClientId;
-        
     }
-
 
     void Start()
     {
         inputs = GetComponent<InputManager>();
         rb = GetComponent<Rigidbody2D>();
-
         spawnManager = SpawnManager.Instance;
-       // panel.SetActive(false);
+        spriteRender = GetComponent<SpriteRenderer>();
 
-        // Se for multiplayer, só o dono instancia o UI
+        materialInstance = new Material(spriteRender.material);
+        spriteRender.material = materialInstance;
+
+
         if (isMultiplayer)
         {
-            
-            Debug.Log("Quantidade de Jogadores: " + playerID);
             if (!IsOwner) return;
         }
 
         currentHealth = maxHealth;
 
-        // Instancia o UI
         GameObject uiInstance = Instantiate(heartsUIPrefab);
-        DontDestroyOnLoad(uiInstance); // mantém o UI entre cenas
+        DontDestroyOnLoad(uiInstance);
 
         heartUIManager = uiInstance.GetComponent<HeartUIManager>();
         heartUIManager.UpdateHearts(currentHealth, maxHealth);
     }
 
 
-
     public void TakeDamage(int damage, Vector3 damageSourcePosition)
     {
-        if (isKnockedBack) return; // <--- ADICIONE ESTA LINHA PARA EVITAR MÚLTIPLOS KNOCKBACKS
+        if (isDead || isInvincible) return;
+
+        isInvincible = true;
+
+        // Inicia as corrotinas de física (knockback) e estado (invencibilidade)
+        StartCoroutine(KnockbackCoroutine(damageSourcePosition));
+        StartCoroutine(InvincibilityCoroutine()); // <<< Inicia a nova corrotina aqui
 
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         heartUIManager?.UpdateHearts(currentHealth, maxHealth);
 
-        StartCoroutine(KnockbackCoroutine(damageSourcePosition));
-
-        playerCount = NetworkManager.Singleton.ConnectedClients.Count;
-
-        if (currentHealth <= 0 && IsOwner && !IsSingleplayer())
+        if (currentHealth <= 0)
         {
-            StartCoroutine(CooldownRespawn(1));
+            isDead = true;
+            if (IsOwner || IsSingleplayer())
+            {
+                StartCoroutine(CooldownRespawn(1));
+            }
         }
-        else if (currentHealth <= 0 && IsSingleplayer())
+    }
+    private IEnumerator InvincibilityCoroutine()
+    {
+        // 1. Flash branco inicial para dar impacto (sua lógica de FeedbackDamage)
+        materialInstance.SetFloat(FlashAmountID, 1f);
+        yield return new WaitForSeconds(0.1f);
+
+        // 2. Período de invencibilidade com o jogador piscando sutilmente
+        float remainingTime = invincibilityDuration - 0.1f;
+        float timer = 0f;
+        bool isFlashed = false;
+
+        while (timer < remainingTime)
         {
-            StartCoroutine(CooldownRespawn(1));
+            // Alterna entre normal (0) e um flash leve (0.5)
+            materialInstance.SetFloat(FlashAmountID, isFlashed ? 0f : 0.5f);
+            isFlashed = !isFlashed;
+
+            yield return new WaitForSeconds(0.15f); // Velocidade da piscada
+            timer += 0.15f;
         }
+
+        // 3. Garante que o jogador volte à aparência normal no final
+        materialInstance.SetFloat(FlashAmountID, 0f);
+
+        // 4. Desativa a invencibilidade
+        isInvincible = false;
     }
 
 
@@ -106,15 +132,15 @@ public class PlayerHealth : NetworkBehaviour
     private IEnumerator CooldownRespawn(int time)
     {
         inputs.DisableMovement();
+        rb.linearVelocity = Vector2.zero; // Zera a velocidade para evitar que deslize enquanto morto
 
         yield return new WaitForSeconds(time);
 
         spawnManager.RespawnPlayer(gameObject);
-
         currentHealth = maxHealth;
-
         heartUIManager.UpdateHearts(currentHealth, maxHealth);
 
+        isDead = false; // <<< PASSO 4: Revive o jogador
         inputs.EnableMovement();
     }
 
@@ -123,28 +149,26 @@ public class PlayerHealth : NetworkBehaviour
         inputs.DisableMovement();
         isKnockedBack = true;
 
-        // 2. Calcula a direção da força
         Vector2 direction = (transform.position - damageSourcePosition).normalized;
-
-        // 3. Zera a velocidade atual para que a nova força seja aplicada de forma limpa
         rb.linearVelocity = Vector2.zero;
+        rb.AddForce(direction * 10f, ForceMode2D.Impulse);
 
-        // 4. Aplica a força de repulsão
-        rb.AddForce(direction * 20f, ForceMode2D.Impulse);
-
-        // 5. Espera a duração do knockback
         yield return new WaitForSeconds(knockbackDuration);
 
-        // 6. Para o movimento do Rigidbody
         rb.linearVelocity = Vector2.zero;
 
-        inputs.EnableMovement();
+        if (!isDead)
+        {
+            inputs.EnableMovement();
+        }
+
         isKnockedBack = false;
     }
 
-
     public void Heal(int amount)
     {
+        if (isDead) return; // Um jogador morto não pode se curar
+
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         heartUIManager?.UpdateHearts(currentHealth, maxHealth);
     }
@@ -156,46 +180,8 @@ public class PlayerHealth : NetworkBehaviour
         heartUIManager?.UpdateHearts(currentHealth, maxHealth);
     }
 
-  
-
-   // public IEnumerator ContadorDeMorte()
-   // {
-
-   //     bloquearContador = true;
-   //     IsDead = true;
-
-   //     panel.SetActive(true);
-
-   //     int contador = 11;
-
-   //     inputs.DisableMovement();
-
-
-   //     while (contador > 0)
-   //     {
-   //         contador--;
-   //         textCount.text = contador.ToString();
-   //         Debug.Log(contador);
-   //         yield return new WaitForSeconds(1);
-
-           
-
-   //     }
-
-   //     inputs.EnableMovement();
-
-   //     panel.SetActive(false);
-
-   //     IsDead = false;
-   //     bloquearContador = false;
-
-   // }
-
-
     private void Update()
     {
-        
-
-      
+        // Pode ser mantido vazio
     }
 }

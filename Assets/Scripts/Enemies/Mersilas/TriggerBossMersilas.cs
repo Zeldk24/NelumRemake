@@ -1,33 +1,67 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
 
 public class TriggerBossMersilas : MonoBehaviour
 {
     private BossController boss;
-    
+
+    [Header("Requerimento")]
+    [Tooltip("Arraste o ScriptableObject do item necessário que o jogador deve ter no inventário.")]
+    public Item requiredItem;
 
     [Header("Cutscene")]
     public float cutsceneDuration = 7f;
+
+    private bool isActivated = false;
+    private Collider2D col;
+
+    private void Awake()
+    {
+        col = GetComponent<Collider2D>();
+    }
 
     public void RegisterBoss(BossController bossController)
     {
         boss = bossController;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (!other.CompareTag("Player") || boss == null)
+        // Só funciona para o player
+        if (isActivated || !other.gameObject.CompareTag("Player") || boss == null)
             return;
 
-        // Pega a c�mera dentro do player
-        Camera playerCam = other.GetComponentInChildren<Camera>();
+        if (other.gameObject.TryGetComponent<NetworkObject>(out var networkObject) && !networkObject.IsOwner)
+            return;
+
+        Inventory playerInventory = Inventory.Singleton;
+
+        if (playerInventory == null)
+        {
+            Debug.LogError("Não foi possível encontrar o Singleton do Inventário!");
+            return;
+        }
+
+        // 🚫 Se não tiver o item → NÃO deixa passar (colisor continua sólido)
+        if (requiredItem != null && !playerInventory.HasItem(requiredItem))
+        {
+            Debug.Log($"O jogador não possui o item '{requiredItem.itemName}' no inventário.");
+            return;
+        }
+
+        // ✅ Se tiver o item → libera passagem
+        isActivated = true;
+        Debug.Log("Item encontrado! Iniciando a cutscene do boss.");
+
+        if (col != null)
+            col.enabled = false; // desativa a barreira
+
+        Camera playerCam = other.gameObject.GetComponentInChildren<Camera>();
         if (playerCam != null)
         {
             StartCoroutine(Cutscene(other.transform, playerCam));
-           
         }
-       
     }
 
     private IEnumerator Cutscene(Transform player, Camera cam)
@@ -46,7 +80,7 @@ public class TriggerBossMersilas : MonoBehaviour
                                         cam.transform.position.z);
 
         float t = 0f;
-        float moveDuration = 1.5f; // tempo que a camera leva at� o boss
+        float moveDuration = 1.5f;
 
         while (t < 1f)
         {
@@ -59,12 +93,8 @@ public class TriggerBossMersilas : MonoBehaviour
 
         boss.PlayRoar();
 
-        camController = player.GetComponentInChildren<CameraController>();
         if (camController != null)
-        {
-            // tremor de 0.6 segundos enquanto o boss ruge
             StartCoroutine(camController.CameraShake(3f, 0.2f));
-        }
 
         yield return new WaitForSeconds(3f);
 

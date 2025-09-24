@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: be089a40e2a816e4a829cc7b8d3c9527
   m_SerializeEntries:
+  - m_GUID: 023ffd7c6242fcd42860ffff88c53807
+    m_Address: Leaf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 04d9444c08453104bb4b1351d8f05fe6
     m_Address: Mersilas
     m_ReadOnly: 0
@@ -32,6 +37,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34b8dd48ad8c6354b8bbe6414e38df87
     m_Address: Prefab_Ant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 426834dd11b35354bbf88d9602294f5e
+    m_Address: Leaf
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

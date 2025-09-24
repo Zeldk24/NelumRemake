@@ -61,6 +61,32 @@ public class Inventory : NetworkBehaviour
         //ChangeSelectedSlot(0);
     }
 
+    public bool HasItem(Item itemToCheck)
+    {
+        if (itemToCheck == null) return false;
+
+        // Procura nos slots do inventário principal
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            // Verifica se o slot não está vazio e se o item corresponde
+            if (slot.myItem != null && slot.myItem.myItemScriptable == itemToCheck)
+            {
+                return true; // Encontrou! Pode parar a busca.
+            }
+        }
+
+        // Procura nos slots de equipamento
+        foreach (InventorySlot slot in equipmentSlots)
+        {
+            if (slot.myItem != null && slot.myItem.myItemScriptable == itemToCheck)
+            {
+                return true; // Encontrou no equipamento!
+            }
+        }
+
+        // Se passou por todos os loops e não encontrou, retorna falso
+        return false;
+    }
 
     void ChangeSelectedSlot(int newValue)
     {

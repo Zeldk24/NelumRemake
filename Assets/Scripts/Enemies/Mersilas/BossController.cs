@@ -17,13 +17,14 @@ public class BossController : NetworkBehaviour
 
     [Header("Dash Config")]
     public float dashSpeed = 12f;
-    public float dashCooldown = 5f;
+    public float dashCooldown = 1.5f;
     public GameObject dashIndicatorPrefab;
 
     public bool isInDashPhase = false;
     private bool dashAvailable = true;
     private bool isDashing = false;
 
+    private Collider2D dashCollider;
     // --- Layers ---
     private string dashLayerName = "Wall";
 
@@ -32,6 +33,9 @@ public class BossController : NetworkBehaviour
         animator = GetComponent<Animator>();
         particleSystems = GetComponentInChildren<ParticleSystem>();
         stateMachine = GetComponent<InimigoStateMachine>();
+        dashCollider = GetComponent<Collider2D>();
+        Debug.Log("Collider encontrado: " + dashCollider);
+
     }
 
     private void Start()
@@ -57,6 +61,12 @@ public class BossController : NetworkBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            dashCollider.enabled = false;
+        }
+
+
         if (enemyController == null || player == null) return;
 
         // Controle do dash apenas na fase 2
@@ -78,8 +88,6 @@ public class BossController : NetworkBehaviour
 
             float targetY = player.position.y;
             bool fromLeft = Random.value > 0.5f;
-            
-
 
             Vector3 awayDir = (transform.position - player.position).normalized;
             Vector3 prepTarget = transform.position + awayDir * 2f;
@@ -119,7 +127,11 @@ public class BossController : NetworkBehaviour
             isDashing = false;
         }
 
+        // espera cooldown do dash
         yield return new WaitForSeconds(dashCooldown);
+
+        // reativa o collider no próximo ciclo
+        dashCollider.enabled = true;
         dashAvailable = true;
     }
 
@@ -145,7 +157,10 @@ public class BossController : NetworkBehaviour
             if (ph != null)
             {
                 ph.TakeDamage(1, transform.position);
+
             }
+
+            dashCollider.enabled = false;
         }
     }
 

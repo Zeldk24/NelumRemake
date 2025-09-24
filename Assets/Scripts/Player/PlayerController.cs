@@ -217,6 +217,23 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    private void NeutralizeHeldItemComponents(GameObject heldItem)
+    {
+        if (heldItem == null) return;
+
+        // 1. Desativa o script de coleta para que ele não execute a lógica de OnTriggerEnter2D
+        if (heldItem.TryGetComponent<PickupItem>(out var pickupScript))
+        {
+            pickupScript.enabled = false;
+        }
+
+        // 2. Desativa o collider para evitar quaisquer interações de trigger/colisão
+        if (heldItem.TryGetComponent<Collider2D>(out var collider))
+        {
+            collider.enabled = false;
+        }
+    }
+
     private async void SetVisualItemLocal(string itemAddress)
     {
         if (isChangingItem)
@@ -239,6 +256,8 @@ public class PlayerController : NetworkBehaviour
             currentHandItem.transform.localPosition = Vector3.zero;
             currentHandItem.transform.localRotation = Quaternion.identity;
 
+            // --- ADICIONE ESTA LINHA ---
+            NeutralizeHeldItemComponents(currentHandItem);
         }
 
         Addressables.Release(handle);
@@ -265,6 +284,10 @@ public class PlayerController : NetworkBehaviour
             if (op.Status == AsyncOperationStatus.Succeeded)
             {
                 currentHandItem = Instantiate(op.Result, playerHandsObj.transform);
+
+                // --- ADICIONE ESTA LINHA ---
+                NeutralizeHeldItemComponents(currentHandItem);
+
                 var netObj = currentHandItem.GetComponent<NetworkObject>();
                 netObj.SpawnWithOwnership(OwnerClientId);
                 netObj.TrySetParent(playerHandsObj.GetComponent<NetworkObject>());

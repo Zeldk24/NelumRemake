@@ -166,6 +166,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   item: {fileID: 11400000, guid: 62d984c83294bbf40928c2a0b049a6be, type: 2}
   collectableDelay: 0.5
+  magnetSpeed: 6
 --- !u!50 &2395756672636937638
 Rigidbody2D:
   serializedVersion: 5

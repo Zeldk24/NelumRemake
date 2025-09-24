@@ -1,0 +1,192 @@
+fileFormatVersion: 2
+guid: 7af01c177eab32c40a82dbccf4edc38d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8764890877968506976
+    second: LeafShurikenTXT_0
+  - first:
+      213: -6774348772351271671
+    second: LeafShurikenTXT_1
+  - first:
+      213: -232289474872962413
+    second: LeafShurikenTXT_2
+  - first:
+      213: -537947653223104548
+    second: LeafShurikenTXT_3
+  - first:
+      213: 2204392428966826872
+    second: LeafShurikenTXT_4
+  - first:
+      213: 3461576445706328759
+    second: LeafShurikenTXT_5
+  - first:
+      213: -4900388336116120706
+    second: LeafShurikenTXT_6
+  - first:
+      213: -8121437853129854134
+    second: LeafShurikenTXT_7
+  - first:
+      213: -1518159035554026769
+    second: LeafShurikenTXT_8
+  - first:
+      213: 2257563148044648244
+    second: LeafShurikenTXT_9
+  - first:
+      213: 7094317316049637934
+    second: LeafShurikenTXT_10
+  - first:
+      213: 6569541051164622271
+    second: LeafShurikenTXT_11
+  - first:
+      213: 6776902470472157679
+    second: LeafShurikenTXT_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LeafShurikenTXT_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 85
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 060ef5ca0d523a970800000000000000
+      internalID: 8764890877968506976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 36e6156781a562f45879dce5ea19a79e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LeafShurikenTXT_0: 8764890877968506976
+      LeafShurikenTXT_1: -6774348772351271671
+      LeafShurikenTXT_10: 7094317316049637934
+      LeafShurikenTXT_11: 6569541051164622271
+      LeafShurikenTXT_12: 6776902470472157679
+      LeafShurikenTXT_13: -1361865218
+      LeafShurikenTXT_2: -232289474872962413
+      LeafShurikenTXT_3: -537947653223104548
+      LeafShurikenTXT_4: 2204392428966826872
+      LeafShurikenTXT_5: 3461576445706328759
+      LeafShurikenTXT_6: -4900388336116120706
+      LeafShurikenTXT_7: -8121437853129854134
+      LeafShurikenTXT_8: -1518159035554026769
+      LeafShurikenTXT_9: 2257563148044648244
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
