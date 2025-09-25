@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Drawing;
 using NUnit.Framework.Interfaces;
 using Unity.Netcode;
@@ -14,15 +14,15 @@ public class EnemyController : NetworkBehaviour
 
     [Header("Componentes")]
     private NavMeshAgent agent;
-    private Rigidbody2D rb; // <- NOVO: ReferÍncia para o Rigidbody2D
+    private Rigidbody2D rb; // <- NOVO: Refer√™ncia para o Rigidbody2D
     private SpriteRenderer spriteRender;
     private NetworkObject enemiesNO;
     private Material materialInstance;
     private static readonly int FlashAmountID = Shader.PropertyToID("_FlashAmount");
 
     [Header("Knockback")]
-    public float knockbackStrength = 5f; // ForÁa da repuls„o
-    public float knockbackDuration = 0.2f; // DuraÁ„o em segundos
+    public float knockbackStrength = 5f; // For√ßa da repuls√£o
+    public float knockbackDuration = 0.2f; // Dura√ß√£o em segundos
     public bool isKnockedBack; // Flag para controlar o estado
 
     public int currentHealh;
@@ -30,7 +30,7 @@ public class EnemyController : NetworkBehaviour
 
     [HideInInspector] public bool isAiPermanentlyDisabled = false;
 
-
+    private bool isDead = false;
     private void Start()
     {
         // Pega os componentes
@@ -39,15 +39,15 @@ public class EnemyController : NetworkBehaviour
         spriteRender = GetComponent<SpriteRenderer>();
         enemiesNO = GetComponent<NetworkObject>();
 
-        // ConfiguraÁ„o de Material/Shader
+        // Configura√ß√£o de Material/Shader
         materialInstance = new Material(spriteRender.material);
         spriteRender.material = materialInstance;
 
-        // ConfiguraÁıes do inimigo
+        // Configura√ß√µes do inimigo
         currentHealh = enemiesData.health;
         damage = enemiesData.damage;
 
-        // ConfiguraÁıes do NavMeshAgent para 2D
+        // Configura√ß√µes do NavMeshAgent para 2D
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -55,11 +55,15 @@ public class EnemyController : NetworkBehaviour
     // NOVO: Adicione um Update para pausar a IA durante o knockback
     private void Update()
     {
-        // Se estiver sofrendo knockback, a IA (movimento do NavMeshAgent) n„o deve ser executada
-        // Isso impede o NavMeshAgent de lutar contra a forÁa do knockback
+        if (isAiPermanentlyDisabled)
+        {
+            return;
+        }
+        // Se estiver sofrendo knockback, a IA (movimento do NavMeshAgent) n√£o deve ser executada
+        // Isso impede o NavMeshAgent de lutar contra a for√ßa do knockback
         if (isKnockedBack)
         {
-            // O NavMeshAgent j· estar· desabilitado, mas È uma boa pr·tica
+            // O NavMeshAgent j√° estar√° desabilitado, mas √© uma boa pr√°tica
             return;
         }
 
@@ -67,7 +71,7 @@ public class EnemyController : NetworkBehaviour
     }
 
 
-    /*[] Coroutine de feedback de dano ... (cÛdigo existente)*/
+    /*[] Coroutine de feedback de dano ... (c√≥digo existente)*/
     private IEnumerator FeedbackDamage()
     {
         materialInstance.SetFloat(FlashAmountID, 1f);
@@ -77,61 +81,73 @@ public class EnemyController : NetworkBehaviour
         materialInstance.SetFloat(FlashAmountID, 0f);
     }
 
-    // --- L”GICA DE DANO E KNOCKBACK ---
+    // --- L√ìGICA DE DANO E KNOCKBACK ---
 
-    // MODIFICADO: Agora precisamos da posiÁ„o de quem causou o dano
+    // MODIFICADO: Agora precisamos da posi√ß√£o de quem causou o dano
     [ServerRpc(RequireOwnership = false)]
     public void TakeDamageEnemyServerRpc(int damage, Vector3 damageSourcePosition)
     {
-        // Se j· estiver em knockback ou morto, n„o faz nada
+        // Se j√° estiver em knockback ou morto, n√£o faz nada
         if (isKnockedBack || currentHealh <= 0) return;
 
         TakeDamageInternal(damage, damageSourcePosition);
     }
 
-    // MODIFICADO: Par‚metro damageSourcePosition adicionado
+    // MODIFICADO: Par√¢metro damageSourcePosition adicionado
     public async void TakeDamageInternal(int damage, Vector3 damageSourcePosition)
     {
+        if (isDead) return; // j√° morreu, ignora
+
         currentHealh -= damage;
 
-        // Chama a coroutine de Knockback
+        // Knockback etc...
         StartCoroutine(KnockbackCoroutine(damageSourcePosition));
 
         if (!IsSingleplayer())
-        {
             FeedbackDamageClientRpc();
-        }
         else
-        {
             StartCoroutine(FeedbackDamage());
-        }
 
-        if (currentHealh <= enemiesData.health / 2)
+        if (currentHealh <= enemiesData.health / 2 && !isAiPermanentlyDisabled)
         {
             BossController boss = GetComponent<BossController>();
             if (boss != null && !boss.isInDashPhase)
             {
+                isAiPermanentlyDisabled = true;
+
+                // 2. Garante que o NavMeshAgent est√° desativado para o BossController assumir.
+                if (agent.enabled)
+                {
+                    agent.ResetPath(); // Limpa o caminho atual
+                    agent.enabled = false;
+                }
+
+
                 boss.EnterDashPhase();
             }
         }
 
-
-        if (currentHealh <= 0)
+        if (currentHealh <= 0 && !isDead)
         {
+            isDead = true; // üîë garante que s√≥ entra aqui uma vez
+
             if (!string.IsNullOrEmpty(enemiesData.deathSoundAddress))
             {
                 SoundManager.Instance.PlaySound(enemiesData.deathSoundAddress, enemiesData.deathSoundVolume);
+            }
 
-                AsyncOperationHandle<GameObject> handle = Addressables.InstantiateAsync(enemiesData.dropItem, transform.position, transform.rotation);
+            if (enemiesData.dropItem != null)
+            {
+                var handle = Addressables.InstantiateAsync(enemiesData.dropItem, transform.position, transform.rotation);
                 GameObject instance = await handle.Task;
-
                 instance.layer = LayerMask.NameToLayer("PickupItens");
             }
+
             DeathEnemy();
         }
     }
 
-    // NOVO: A coroutine que aplica a forÁa do knockback
+    // NOVO: A coroutine que aplica a for√ßa do knockback
     private IEnumerator KnockbackCoroutine(Vector3 damageSourcePosition)
     {
         isKnockedBack = true;
@@ -142,22 +158,22 @@ public class EnemyController : NetworkBehaviour
             agent.enabled = false;
         }
 
-        // 2. Calcula a direÁ„o da forÁa
+        // 2. Calcula a dire√ß√£o da for√ßa
         Vector2 direction = (transform.position - damageSourcePosition).normalized;
 
         // 3. Zera a velocidade atual
         rb.linearVelocity = Vector2.zero;
 
-        // 4. Aplica a forÁa de repuls„o
+        // 4. Aplica a for√ßa de repuls√£o
         rb.AddForce(direction * knockbackStrength, ForceMode2D.Impulse);
 
-        // 5. Espera a duraÁ„o do knockback
+        // 5. Espera a dura√ß√£o do knockback
         yield return new WaitForSeconds(knockbackDuration);
 
         // 6. Para o movimento do Rigidbody
         rb.linearVelocity = Vector2.zero;
 
-        // 7. Reativa o NavMeshAgent apenas se a IA n„o estiver permanentemente desativada
+        // 7. Reativa o NavMeshAgent apenas se a IA n√£o estiver permanentemente desativada
         if (!isAiPermanentlyDisabled && agent != null && !agent.enabled)
         {
             agent.enabled = true;

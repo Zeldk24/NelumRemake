@@ -27,6 +27,7 @@ public class BossController : NetworkBehaviour
     private Collider2D dashCollider;
     // --- Layers ---
     private string dashLayerName = "Wall";
+    private bool _hasHitPlayerThisDash = false;
 
     private void Awake()
     {
@@ -61,12 +62,7 @@ public class BossController : NetworkBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            dashCollider.enabled = false;
-        }
-
-
+      
         if (enemyController == null || player == null) return;
 
         // Controle do dash apenas na fase 2
@@ -79,37 +75,68 @@ public class BossController : NetworkBehaviour
     private IEnumerator DashRoutine()
     {
         dashAvailable = false;
-        isDashing = true;
+        isDashing = false;
+        _hasHitPlayerThisDash = false;
         agent.enabled = false;
 
         try
         {
             if (player == null) yield break;
 
-            float targetY = player.position.y;
-            bool fromLeft = Random.value > 0.5f;
-
-            Vector3 awayDir = (transform.position - player.position).normalized;
-            Vector3 prepTarget = transform.position + awayDir * 2f;
-            yield return MoveToPosition(prepTarget, 0.3f);
-
             Camera cam = Camera.main;
+            if (cam == null) yield break;
+
+            float targetY = player.position.y;
+
+            // Decide se o recuo será pra esquerda ou direita (aleatório)
+            // Decide se o recuo será pra esquerda ou direita
+            bool recuaEsquerda = Random.value > 0.5f;
+
+            // decide também se sobe ou desce (pra não cruzar o player no meio)
+            bool sobe = Random.value > 0.5f;
+
+            float prepDistanceX = 5f;
+            float prepDistanceY = 3f;
+
+            // ponto alvo do recuo em arco
+            Vector3 prepTarget = player.position
+                + (recuaEsquerda ? Vector3.left : Vector3.right) * prepDistanceX
+                + (sobe ? Vector3.up : Vector3.down) * prepDistanceY;
+
+            // move até esse ponto (não cruza o player, porque tem offset em Y)
+            yield return MoveToPosition(prepTarget, Vector3.Distance(transform.position, prepTarget) / dashSpeed);
+
+
+            // --- Agora define o lado do dash (oposto ao recuo) ---
+            bool fromLeft = !recuaEsquerda;
+
             float camHeight = 2f * cam.orthographicSize;
             float camWidth = camHeight * cam.aspect;
+
             Vector3 offscreenPos = fromLeft ?
                 new Vector3(cam.transform.position.x - camWidth / 2 - 4f, targetY, 0f) :
                 new Vector3(cam.transform.position.x + camWidth / 2 + 4f, targetY, 0f);
+
+            // Vai até fora da tela
             yield return MoveToPosition(offscreenPos, Vector3.Distance(transform.position, offscreenPos) / dashSpeed);
 
+            // Cria o indicador
             if (dashIndicatorPrefab != null)
             {
                 Vector3 indicatorPos = new Vector3(cam.transform.position.x, targetY, 0f);
                 Quaternion rotation = Quaternion.Euler(0, 0, 90f);
                 GameObject indicator = Instantiate(dashIndicatorPrefab, indicatorPos, rotation);
-                indicator.transform.localScale = new Vector3(indicator.transform.localScale.x, camWidth + 8f, indicator.transform.localScale.z);
+
+                float indicatorWidth = camWidth + 8f;
+                indicator.transform.localScale = new Vector3(3.4f, indicatorWidth, indicator.transform.localScale.z);
+
                 Destroy(indicator, 1f);
             }
+
             yield return new WaitForSeconds(1f);
+
+            // --- DASH REAL ---
+            isDashing = true;
 
             Vector3 dashTarget = fromLeft ?
                 new Vector3(cam.transform.position.x + camWidth / 2 + 4f, targetY, 0f) :
@@ -117,7 +144,6 @@ public class BossController : NetworkBehaviour
 
             while (Vector3.Distance(transform.position, dashTarget) > 0.1f)
             {
-                if (!isDashing) break;
                 transform.position = Vector3.MoveTowards(transform.position, dashTarget, dashSpeed * Time.deltaTime);
                 yield return null;
             }
@@ -127,13 +153,10 @@ public class BossController : NetworkBehaviour
             isDashing = false;
         }
 
-        // espera cooldown do dash
         yield return new WaitForSeconds(dashCooldown);
-
-        // reativa o collider no próximo ciclo
-        dashCollider.enabled = true;
         dashAvailable = true;
     }
+
 
     private IEnumerator MoveToPosition(Vector3 target, float duration)
     {
@@ -150,8 +173,11 @@ public class BossController : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isDashing && other.CompareTag("Player"))
+        if (isDashing && !_hasHitPlayerThisDash && other.CompareTag("Player"))
         {
+
+            _hasHitPlayerThisDash = true;
+
             isDashing = false;
             PlayerHealth ph = other.GetComponent<PlayerHealth>();
             if (ph != null)
@@ -160,7 +186,7 @@ public class BossController : NetworkBehaviour
 
             }
 
-            dashCollider.enabled = false;
+           
         }
     }
 
@@ -194,7 +220,12 @@ public class BossController : NetworkBehaviour
             agent.enabled = false;
         }
 
-        gameObject.layer = LayerMask.NameToLayer(dashLayerName);
+        
+
+        if (dashCollider != null)
+        {
+            dashCollider.isTrigger = true;
+        }
         Debug.Log("BOSS ENTROU NA FASE 2! NAVMESH DESATIVADO.");
     }
 }

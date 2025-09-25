@@ -9,26 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a5480833f469046b9f7eb85a0cfab9, type: 3}
-  m_Name: Mersilas
+  m_Script: {fileID: 11500000, guid: da31429710530c446b9c41412c02437f, type: 3}
+  m_Name: Espingalo
   m_EditorClassIdentifier: 
-  prefabEnemieRef:
-    m_AssetGUID: 04d9444c08453104bb4b1351d8f05fe6
-    m_SubObjectName: 
-    m_SubObjectGUID: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
-  health: 30
-  damage: 1
-  dropItem:
+  itemID: Espingalo
+  prefabItemRef:
     m_AssetGUID: b84b911891bfe3041aa949ff2d569c52
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  takeDamageSoundAddress: 
-  takeDamageVolume: 0
-  deathSoundAddress: 
-  deathSoundVolume: 0
-  speed: 0
-  chaseSpeed: 0
+  sprite: {fileID: 5556390634806528709, guid: 038bfcd4797d53046930a0ab3e526bc8, type: 3}
+  itemTag: 6
+  damage: 1
+  stackable: 1
+  itemName: 
+  attackCooldown: 0
+  attackVFXAddress: 
+  attackSoundAddress: BulletEggSound
+  attackVolume: 1
