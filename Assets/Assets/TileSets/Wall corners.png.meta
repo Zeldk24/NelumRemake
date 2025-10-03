@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f21d94c334b625f4fbfde54c37a6bb6a
+guid: 349a792e3ff3abb4aa0eaa155463d39a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1016524823931714797
-    second: EdgeFront_0
+      213: -3824137369460950142
+    second: Wall corners_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,7 +100,95 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EdgeFront_0
+      name: Wall corners_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28bbbf8d25fedeac0800000000000000
+      internalID: -3824137369460950142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall corners_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18cbb38573756034eb56532a81967a52
+      internalID: 175341508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall corners_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0728d1b11ce0e24380a0693ad706146
+      internalID: -2090542565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall corners_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a8a2797d48dc0e4e9797faf585ddd3d
+      internalID: 738763583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall corners_4
       rect:
         serializedVersion: 2
         x: 0
@@ -113,10 +201,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: decf0db01fb6b1e00800000000000000
-      internalID: 1016524823931714797
+      spriteID: 65ac973fa74d5a74fb997d0e91e08354
+      internalID: 1314717430
       vertices: []
       indices: 
       edges: []
@@ -125,7 +213,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 61db56520d45c65409d9c55f60918f57
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +223,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EdgeFront_0: 1016524823931714797
+      Wall corners_0: -3824137369460950142
+      Wall corners_1: 175341508
+      Wall corners_2: -2090542565
+      Wall corners_3: 738763583
+      Wall corners_4: 1314717430
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
