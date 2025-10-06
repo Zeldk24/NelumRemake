@@ -131,22 +131,34 @@ public class PlayerHealth : NetworkBehaviour
 
     private IEnumerator CooldownRespawn(int time)
     {
-        inputs.DisableMovement();
-        rb.linearVelocity = Vector2.zero; // Zera a velocidade para evitar que deslize enquanto morto
+        if (IsOwner || IsSingleplayer())
+        {
+            inputs.DisableMovement();
+            rb.linearVelocity = Vector2.zero;
+        }
 
         yield return new WaitForSeconds(time);
 
-        spawnManager.RespawnPlayer(gameObject);
+        if (IsServer) // apenas o servidor deve fazer o respawn real
+        {
+            spawnManager.RespawnPlayer(gameObject);
+        }
+
         currentHealth = maxHealth;
         heartUIManager.UpdateHearts(currentHealth, maxHealth);
 
-        isDead = false; // <<< PASSO 4: Revive o jogador
-        inputs.EnableMovement();
-    }
+        isDead = false;
 
+        if (IsOwner || IsSingleplayer())
+        {
+            inputs.EnableMovement();
+        }
+    }
     private IEnumerator KnockbackCoroutine(Vector3 damageSourcePosition)
     {
-        inputs.DisableMovement();
+        if (IsOwner || IsSingleplayer())
+            inputs.DisableMovement();
+
         isKnockedBack = true;
 
         Vector2 direction = (transform.position - damageSourcePosition).normalized;
@@ -157,10 +169,8 @@ public class PlayerHealth : NetworkBehaviour
 
         rb.linearVelocity = Vector2.zero;
 
-        if (!isDead)
-        {
+        if (!isDead && (IsOwner || IsSingleplayer()))
             inputs.EnableMovement();
-        }
 
         isKnockedBack = false;
     }

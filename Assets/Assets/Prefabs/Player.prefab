@@ -352,6 +352,7 @@ MonoBehaviour:
   heartsUIPrefab: {fileID: 2241197214089294992, guid: 97f34b7841972a4449bfd7f26cf73773, type: 3}
   knockbackDuration: 0.2
   isKnockedBack: 0
+  invincibilityDuration: 1
 --- !u!114 &12016180398198810
 MonoBehaviour:
   m_ObjectHideFlags: 0

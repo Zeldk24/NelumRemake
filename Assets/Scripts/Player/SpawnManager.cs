@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 
@@ -64,7 +64,7 @@ public class SpawnManager : NetworkBehaviour
     {
         if (spawnPoints == null || index < 0 || index >= spawnPoints.Length)
         {
-            Debug.LogWarning($"Spawn point inv·lido: {index}");
+            Debug.LogWarning($"Spawn point inv√°lido: {index}");
             return null;
         }
 
@@ -74,7 +74,7 @@ public class SpawnManager : NetworkBehaviour
     public void StartSinglePlayer()
     {
         isSinglePlayerStarting = true;
-        SceneManager.LoadScene(1); // Substitua pelo nome ou Ìndice da sua cena
+        SceneManager.LoadScene(1); // Substitua pelo nome ou √≠ndice da sua cena
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -93,7 +93,7 @@ public class SpawnManager : NetworkBehaviour
     {
         if (playerPrefab == null)
         {
-            Debug.LogError("Prefab do jogador n„o est· atribuÌdo!");
+            Debug.LogError("Prefab do jogador n√£o est√° atribu√≠do!");
             return;
         }
 
