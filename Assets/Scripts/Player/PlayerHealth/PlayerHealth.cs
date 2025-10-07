@@ -25,6 +25,7 @@ public class PlayerHealth : NetworkBehaviour
     private bool isDead = false; // <<< PASSO 1: Adicionar a flag de estado de morte
 
     [Header("Knockback")]
+    public float knockbackStrength = 5f;
     public float knockbackDuration = 0.2f;
     public bool isKnockedBack;
     private Rigidbody2D rb;
@@ -139,10 +140,13 @@ public class PlayerHealth : NetworkBehaviour
 
         yield return new WaitForSeconds(time);
 
-        if (IsServer) // apenas o servidor deve fazer o respawn real
+        // --- MUDANÇA AQUI ---
+        // Agora, ele vai fazer o respawn se for o servidor OU se for single-player.
+        if (IsServer || IsSingleplayer())
         {
             spawnManager.RespawnPlayer(gameObject);
         }
+        // --- FIM DA MUDANÇA ---
 
         currentHealth = maxHealth;
         heartUIManager.UpdateHearts(currentHealth, maxHealth);

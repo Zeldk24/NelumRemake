@@ -74,17 +74,8 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    private void Andar()
-    {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
 
-        Vector2 movimento = new Vector3(horizontal, vertical).normalized;
-        _playerRigidbody2d.linearVelocity = movimento;
-       
-
-
-    }
+    
 
     void Start()
     {
@@ -536,7 +527,7 @@ public class PlayerController : NetworkBehaviour
             Attack();
         }
 
-        Andar();
+    
 
     }
 
